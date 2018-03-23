@@ -67,7 +67,7 @@ class Post(dict):
 
     def refresh(self):
         post_author, post_permlink = resolveIdentifier(self.identifier)
-        post = self.steem.rpc.get_content(post_author, post_permlink)
+        post = self.steem.rpc.get_content(post_author, post_permlink, api='social_network')
         if not post["permlink"]:
             raise PostDoesNotExist("Post does not exist: %s" % self.identifier)
 
@@ -171,7 +171,7 @@ class Post(dict):
         """ Return **first-level** comments of the post.
         """
         post_author, post_permlink = resolveIdentifier(self.identifier)
-        posts = self.steem.rpc.get_content_replies(post_author, post_permlink)
+        posts = self.steem.rpc.get_content_replies(post_author, post_permlink, api='social_network')
         r = []
         for post in posts:
             r.append(Post(post, steem_instance=self.steem))

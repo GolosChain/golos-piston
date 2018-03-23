@@ -17,7 +17,7 @@ class Blog(list):
         self.refresh()
 
     def refresh(self):
-        state = self.steem.rpc.get_state("/@%s/blog" % self.name)
+        state = self.steem.rpc.get_state("/@%s/blog" % self.name, api='database_api')
         posts = state["accounts"].get(self.name, {}).get("blog", [])
         r = []
         for p in posts:
@@ -42,7 +42,7 @@ class Blog(list):
                 limit = 1000 - self.current_index
                 self.current_index = 1000
 
-            h = self.steem.rpc.get_account_history(self.name, self.current_index, limit)
+            h = self.steem.rpc.get_account_history(self.name, self.current_index, limit, api='database_api')
             if not h:
                 raise StopIteration
 

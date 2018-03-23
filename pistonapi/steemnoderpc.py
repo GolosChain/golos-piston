@@ -52,15 +52,8 @@ class SteemNodeRPC(GrapheneWebsocketRPC):
         super(SteemNodeRPC, self).__init__(urls, user, password, **kwargs)
         self.chain_params = self.get_network()
 
-    def register_apis(self, apis=None):
-        for api in (apis or self.apis):
-            api = api.replace("_api", "")
-            self.api_id[api] = self.get_api_by_name("%s_api" % api, api_id=1)
-            if not self.api_id[api] and not isinstance(self.api_id[api], int):
-                raise NoAccessApi("No permission to access %s API. " % api)
-
-    def get_account(self, name):
-        account = self.get_accounts([name])
+    def get_account(self, name, **kwargs):
+        account = self.get_accounts([name], **kwargs)
         if account:
             return account[0]
 
@@ -105,7 +98,7 @@ class SteemNodeRPC(GrapheneWebsocketRPC):
             dictionary with keys chain_id, prefix, and other chain
             specific settings
         """
-        props = self.get_dynamic_global_properties()
+        props = self.get_dynamic_global_properties(api='database_api')
         chain = props["current_supply"].split(" ")[1]
         assert chain in known_chains, "The chain you are connecting to is not supported"
         return known_chains.get(chain)
@@ -150,7 +143,23 @@ class SteemNodeRPC(GrapheneWebsocketRPC):
             raise e
 
     def __getattr__(self, name):
-        """ Map all methods to RPC calls and pass through the arguments.
-            It makes use of the GrapheneRPC library.
+        """ Map all methods to RPC calls and pass through the arguments
         """
-        return super(SteemNodeRPC, self).__getattr__(name)
+        def method(*args, **kwargs):
+
+            # Sepcify the api to talk to
+            api = kwargs.pop('api', None)
+            if not api:
+                raise exceptions.InvalidAPICallFormat("You need to provide 'api' kwarg")
+
+            # let's be able to define the num_retries per query
+            self.num_retries = kwargs.get("num_retries", self.num_retries)
+
+            query = {"jsonrpc": "2.0",
+                     "id": self.get_request_id(),
+                     "method": "call",
+                     "params": [api, name, list(args)]
+                     }
+            r = self.rpcexec(query)
+            return r
+        return method

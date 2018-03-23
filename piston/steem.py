@@ -129,12 +129,6 @@ class Steem(object):
                           rpcpassword=rpcpassword,
                           **kwargs)
 
-        # Try Optional APIs
-        try:
-            self.rpc.register_apis(["account_by_key", "follow"])
-        except NoAccessApi as e:
-            log.info(str(e))
-
         self.wallet = Wallet(self.rpc, **kwargs)
 
     def _connect(self,
@@ -222,7 +216,7 @@ class Steem(object):
     def info(self):
         """ Returns the global properties
         """
-        return self.rpc.get_dynamic_global_properties()
+        return self.rpc.get_dynamic_global_properties(api='database_api')
 
     def reply(self, identifier, body, title="", author="", meta=None):
         """ Reply to an existing post

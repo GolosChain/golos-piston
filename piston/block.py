@@ -29,7 +29,7 @@ class Block(dict):
             self.refresh()
 
     def refresh(self):
-        block = self.steem.rpc.get_block(self.block)
+        block = self.steem.rpc.get_block(self.block, api='database_api')
         if not block:
             raise BlockDoesNotExistsException
         super(Block, self).__init__(block)

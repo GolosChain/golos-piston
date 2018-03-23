@@ -18,9 +18,6 @@ class Dex(object):
 
     def __init__(self, steem_instance=None):
         self.steem = steem_instance or shared_steem_instance()
-        # ensure market_history is registered
-        self.steem.rpc.apis = list(set(self.steem.rpc.apis + ["market_history"]))
-        self.steem.rpc.register_apis()
 
     def _get_asset(self, symbol):
         """ Return the properties of the assets tradeable on the
@@ -160,7 +157,7 @@ class Dex(object):
         if not account:
             raise ValueError("You need to provide an account")
 
-        orders = self.steem.rpc.get_open_orders(account, limit=1000)
+        orders = self.steem.rpc.get_open_orders(account, limit=1000, api='market_history')
         return orders
 
     def returnTradeHistory(self, time=1 * 60 * 60, limit=100):

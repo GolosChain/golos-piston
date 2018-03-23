@@ -47,7 +47,7 @@ class Blockchain(object):
     def info(self):
         """ This call returns the *dynamic global properties*
         """
-        return self.steem.rpc.get_dynamic_global_properties()
+        return self.steem.rpc.get_dynamic_global_properties(api='database_api')
 
     def chainParameters(self):
         return self.config()["parameters"]
@@ -56,10 +56,10 @@ class Blockchain(object):
         return self.steem.rpc.get_network()
 
     def get_chain_properties(self):
-        return self.steem.rpc.get_chain_properties()
+        return self.steem.rpc.get_chain_properties(api='database_api')
 
     def config(self):
-        return self.steem.rpc.get_config()
+        return self.steem.rpc.get_config(api='database_api')
 
     def get_current_block_num(self):
         """ This call returns the current block
@@ -115,7 +115,7 @@ class Blockchain(object):
             # Blocks from start until head block
             for blocknum in range(start, head_block + 1):
                 # Get full block
-                block = self.steem.rpc.get_block(blocknum)
+                block = self.steem.rpc.get_block(blocknum, api='database_api')
                 if not block:
                     start = blocknum
                     retry = True
@@ -194,7 +194,7 @@ class Blockchain(object):
     def get_ops_in_block(self, blocknum, only_virtual_ops=False):
         """ Get all the operations from the block
         """
-        block = self.steem.rpc.get_block(blocknum)
+        block = self.steem.rpc.get_block(blocknum, api='database_api')
         ret = list()
         if not block:
             return ret
@@ -298,7 +298,7 @@ class Blockchain(object):
         """
         lastname = start
         while True:
-            names = self.steem.rpc.lookup_accounts(lastname, steps)
+            names = self.steem.rpc.lookup_accounts(lastname, steps, api='database_api')
             for name in names:
                 yield name
                 if name == stop:

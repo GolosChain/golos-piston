@@ -119,7 +119,7 @@ class TransactionBuilder(dict):
         """ Verify the authority of the signed transaction
         """
         try:
-            if not self.steem.rpc.verify_authority(self.json()):
+            if not self.steem.rpc.verify_authority(self.json(), api='database_api'):
                 raise InsufficientAuthorityError
         except Exception as e:
             raise e
@@ -134,7 +134,7 @@ class TransactionBuilder(dict):
             return self
 
         try:
-            if not self.steem.rpc.verify_authority(self.json()):
+            if not self.steem.rpc.verify_authority(self.json(), api='database_api'):
                 raise InsufficientAuthorityError
         except Exception as e:
             raise e
