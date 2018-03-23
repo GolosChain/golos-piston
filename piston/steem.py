@@ -41,8 +41,6 @@ class Steem(object):
     """ Connect to the Steem network.
 
         :param str node: Node to connect to *(optional)*
-        :param str rpcuser: RPC user *(optional)*
-        :param str rpcpassword: RPC password *(optional)*
         :param bool nobroadcast: Do **not** broadcast a transaction! *(optional)*
         :param bool debug: Enable Debugging *(optional)*
         :param array,dict,string keys: Predefine the wif keys to shortcut the wallet database
@@ -103,8 +101,6 @@ class Steem(object):
 
     def __init__(self,
                  node="",
-                 rpcuser="",
-                 rpcpassword="",
                  debug=False,
                  **kwargs):
 
@@ -125,16 +121,12 @@ class Steem(object):
 
         if not self.offline:
             self._connect(node=node,
-                          rpcuser=rpcuser,
-                          rpcpassword=rpcpassword,
                           **kwargs)
 
         self.wallet = Wallet(self.rpc, **kwargs)
 
     def _connect(self,
                  node="",
-                 rpcuser="",
-                 rpcpassword="",
                  **kwargs):
         """ Connect to Steem network (internal use only)
         """
@@ -144,13 +136,7 @@ class Steem(object):
             else:
                 raise ValueError("A Steem node needs to be provided!")
 
-        if not rpcuser and "rpcuser" in config:
-            rpcuser = config["rpcuser"]
-
-        if not rpcpassword and "rpcpassword" in config:
-            rpcpassword = config["rpcpassword"]
-
-        self.rpc = SteemNodeRPC(node, rpcuser, rpcpassword, **kwargs)
+        self.rpc = SteemNodeRPC(node, **kwargs)
 
     def finalizeOp(self, ops, account, permission):
         """ This method obtains the required private keys if present in
