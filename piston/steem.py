@@ -592,7 +592,7 @@ class Steem(object):
         for k in additional_posting_accounts:
             posting_accounts_authority.append([k, 1])
 
-        props = self.rpc.get_chain_properties()
+        props = self.rpc.get_chain_properties(api='database_api')
         # the Account_create operation expects a string
         # so this is a little hacky, but it's the easiest way to deal
         # with STEEM/Graphene amounts.
@@ -947,7 +947,7 @@ class Steem(object):
             :param str author: Show replies for this author
             :param bool skipown: Do not show my own replies
         """
-        state = self.rpc.get_state("/@%s/recent-replies" % author)
+        state = self.rpc.get_state("/@%s/recent-replies" % author, api='database_api')
         replies = state["accounts"][author].get("recent_replies", [])
         discussions = []
         for reply in replies:
@@ -960,7 +960,7 @@ class Steem(object):
     def get_promoted(self):
         """ Get promoted posts
         """
-        state = self.rpc.get_state("/promoted")
+        state = self.rpc.get_state("/promoted", api='database_api')
         # why is there a empty key in the struct?
         promoted = state["discussion_idx"][''].get("promoted", [])
         r = []
@@ -996,7 +996,7 @@ class Steem(object):
 
         func = getattr(self.rpc, "get_discussions_by_%s" % sort)
         r = []
-        for p in func(discussion_query):
+        for p in func(discussion_query, api='social_network'):
             r.append(Post(p, steem_instance=self))
         return r
 
@@ -1019,7 +1019,7 @@ class Steem(object):
         if not account:
             raise ValueError("You need to provide an account")
         a = Account(account, steem_instance=self)
-        info = self.rpc.get_dynamic_global_properties()
+        info = self.rpc.get_dynamic_global_properties(api='database_api')
         steem_per_mvest = (
             Amount(info["total_vesting_fund_steem"]).amount /
             (Amount(info["total_vesting_shares"]).amount / 1e6)

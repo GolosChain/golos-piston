@@ -265,7 +265,7 @@ class Wallet():
         if "owner" in Wallet.keyMap:
             return Wallet.keyMap.get("owner")
         else:
-            account = self.rpc.get_account(name)
+            account = self.rpc.get_account(name, api='database_api')
             if not account:
                 return
             for authority in account["owner"]["key_auths"]:
@@ -280,7 +280,7 @@ class Wallet():
         if "posting" in Wallet.keyMap:
             return Wallet.keyMap.get("posting")
         else:
-            account = self.rpc.get_account(name)
+            account = self.rpc.get_account(name, api='database_api')
             if not account:
                 return
             for authority in account["posting"]["key_auths"]:
@@ -295,7 +295,7 @@ class Wallet():
         if "memo" in Wallet.keyMap:
             return Wallet.keyMap.get("memo")
         else:
-            account = self.rpc.get_account(name)
+            account = self.rpc.get_account(name, api='database_api')
             if not account:
                 return
             key = self.getPrivateKeyForPublicKey(account["memo_key"])
