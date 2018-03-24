@@ -140,7 +140,7 @@ class TransactionBuilder(dict):
             raise e
 
         try:
-            self.steem.rpc.broadcast_transaction(self.json(), api="network_broadcast")
+            self.steem.rpc.broadcast_transaction(self.json(), api="network_broadcast_api")
         except Exception as e:
             raise e
 
