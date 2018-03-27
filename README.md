@@ -15,7 +15,7 @@ Install with `pip3`:
 
 Manual installation:
 
-    $ git clone https://github.com/bitfag/golos-piston
+    $ git clone https://github.com/bitfag/golos-piston.git
     $ cd golos-piston
     $ python3 setup.py install --user
 
