@@ -3,7 +3,7 @@ Python Library for Golos
 
 This is a forked version of [piston-lib](https://github.com/xeroc/piston-lib) which is unmaintained.
 
-This library uses websockets to communicate with golosd. The key difference from [golos-python](https://github.com/GolosChain/golos-python) is that it uses http API.
+This library uses websockets to communicate with golosd. The key difference from [golos-python](https://github.com/GolosChain/golos-python) is that piston-lib uses websockets while golos-python uses http API.
 
 Installation
 ------------
