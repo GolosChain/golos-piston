@@ -13,6 +13,10 @@ Install with `pip3`:
     $ sudo apt-get install libffi-dev libssl-dev python-dev python3-pip
     $ pip3 install golos-piston
 
+Install current version via pipenv:
+
+    $ pipenv install 'git+https://github.com/bitfag/golos-piston.git#egg=golos-piston'
+
 Manual installation:
 
     $ git clone https://github.com/bitfag/golos-piston.git
