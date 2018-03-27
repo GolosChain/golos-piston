@@ -1,5 +1,6 @@
 The MIT License (MIT)
 
+Copyright (c) 2018 Vladimir Kamarzin
 Copyright (c) 2017 ChainSquad GmbH
 Copyright (c) 2016 Fabian Schuh
 Copyright (c) 2015 Fabian Schuh

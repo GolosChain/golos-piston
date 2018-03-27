@@ -1,25 +1,7 @@
-Contributing to piston-lib 
-==========================
+Contributing to golos-piston
+============================
 
 We welcome your contributions to our project.
-
-Flow
-----
-
-This project makes heavy use of `git flow <http://nvie.com/posts/a-successful-git-branching-model/>`_.
-If you are not familiar with it, then the most important thing for your
-to understand is that:
-
-    pull requests need to be made against the develop branch
-
-How to Contribute
------------------
-
-0. Familiarize yourself with `contributing on github <https://guides.github.com/activities/contributing-to-open-source/>`
-1. Fork or branch from the master.
-2. Create commits following the commit style
-3. Start a pull request to the master branch
-4. Wait for a @xeroc or another member to review
 
 Issues
 ------

@@ -9,20 +9,20 @@ except LookupError:
     ascii = codecs.lookup('ascii')
     codecs.register(lambda name, enc=ascii: {True: enc}.get(name == 'mbcs'))
 
-VERSION = '0.5.7'
+VERSION = '0.6.0'
 
 setup(
-    name='piston-lib',
+    name='golos-piston',
     version=VERSION,
-    description='Python library for STEEM',
+    description='Python library for Golos',
     long_description=open('README.md').read(),
-    download_url='https://github.com/xeroc/piston-lib/tarball/' + VERSION,
+    download_url='https://github.com/bitfag/golos-piston/tarball/' + VERSION,
     author='Fabian Schuh',
     author_email='Fabian@chainsquad.com',
-    maintainer='Fabian Schuh',
-    maintainer_email='Fabian@chainsquad.com',
+    maintainer='Vladimir Kamarzin',
+    maintainer_email='vvk@vvk.pp.ru',
     url='http://lib.piston.rocks',
-    keywords=['steem', 'library', 'api', 'rpc', 'transactions'],
+    keywords=['golos', 'steem', 'library', 'api', 'rpc', 'transactions'],
     packages=["piston", "pistonapi", "pistonbase"],
     classifiers=[
         'License :: OSI Approved :: MIT License',
