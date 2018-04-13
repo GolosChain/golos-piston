@@ -266,7 +266,7 @@ class Configuration(DataDir):
         "web:debug": False,
         "web:host": "127.0.0.1",
         "web:nobroadcast": False,
-        "prefix": "STM"
+        "prefix": "GLS"
     }
 
     def __init__(self):
