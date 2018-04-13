@@ -258,7 +258,7 @@ class Configuration(DataDir):
         "format": "markdown",
         "limit": 10,
         "list_sorting": "trending",
-        "node": "wss://this.piston.rocks,wss://steemd.steemit.com,wss://node.steem.ws",
+        "node": "wss://ws.golos.io,wss://api.golos.cf",
         "post_category": "steem",
         "rpcpassword": "",
         "rpcuser": "",
