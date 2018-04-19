@@ -1040,6 +1040,20 @@ class Steem(object):
             "vesting_shares_steem": Amount(vesting_shares_steem),
         }
 
+    def get_all_usernames(self, last_user=''):
+        """
+            Fetch the full list of STEEM usernames.
+            This function is taken from golos-python with little adaptaion to piston-style
+            :param str last_user: (optional) username so start from
+        """
+        usernames = self.rpc.lookup_accounts(last_user, 1000, api='database_api')
+        batch = []
+        while len(batch) != 1:
+            batch = self.rpc.lookup_accounts(usernames[-1], 1000, api='database_api')
+            usernames += batch[1:]
+
+        return usernames
+
     def get_account_history(self, account, **kwargs):
         return Account(account, steem_instance=self).rawhistory(**kwargs)
 
