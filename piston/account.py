@@ -84,6 +84,7 @@ class Account(dict):
             "STEEM": my_account_balances["balance"],
             "SBD": my_account_balances["sbd_balance"],
             "VESTS": my_account_balances["vesting_shares"],
+            "VESTS_STEEM": my_account_balances["vesting_shares_steem"],
             "SAVINGS_STEEM": my_account_balances["savings_balance"],
             "SAVINGS_SBD": my_account_balances["savings_sbd_balance"]
         }
