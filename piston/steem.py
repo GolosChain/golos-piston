@@ -450,6 +450,7 @@ class Steem(object):
                        account_name,
                        json_meta={},
                        creator=None,
+                       create_with_delegation=False,
                        owner_key=None,
                        active_key=None,
                        posting_key=None,
@@ -599,7 +600,7 @@ class Steem(object):
         # HF18 requires the fee to be multiplied by 30
         if fee is None:
             f = Amount(props["account_creation_fee"])
-            fee = str(Amount('{} STEEM'.format(f.amount * 30)))
+            fee = str(Amount('{} {}'.format(f.amount, self.rpc.chain_params["steem_symbol"])))
         s = {'creator': creator,
              'fee': fee,
              'json_metadata': json_meta,
@@ -614,10 +615,13 @@ class Steem(object):
              'posting': {'account_auths': posting_accounts_authority,
                          'key_auths': posting_key_authority,
                          'weight_threshold': 1},
-             'prefix': self.rpc.chain_params["prefix"],
-             'delegation': delegation}
+             'prefix': self.rpc.chain_params["prefix"]}
 
-        op = operations.Account_create_with_delegation(**s)
+        if create_with_delegation:
+            s['delegation'] = delegation
+            op = operations.Account_create_with_delegation(**s)
+        else:
+            op = operations.Account_create(**s)
 
         return self.finalizeOp(op, creator, "active")
 
